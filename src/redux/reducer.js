@@ -4,7 +4,6 @@ const initialState = {
 }
 
 const LOGIN_USER = "LOGIN_USER"
-const LOGOUT_USER = "LOGOUT_USER"
 
 export function loginUser(user){
     return {
