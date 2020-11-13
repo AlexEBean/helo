@@ -46,13 +46,13 @@ module.exports = {
       let filtered = []
 
       if (userPosts && search) {
-        filtered = await db.get_posts_by_title(`%${search}%`)
+        filtered = await db.get_search_by_title(`%${search}%`)
         
       } else if (!userPosts && !search){
-        filtered = await db.get_posts_by_not_author(userId)
+        filtered = await db.get_search_by_not_author(userId)
 
       } else if (!userPosts && search){
-        filtered = await db.get_posts_by_title_and_not_author([userId, `%${search}%`])
+        filtered = await db.get_search_by_title_and_not_author([userId, `%${search}%`])
       } else {
         filtered = await db.get_posts()
       }
