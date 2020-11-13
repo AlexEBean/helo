@@ -1,6 +1,6 @@
 CREATE TABLE users
 (
-  user_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   username VARCHAR(20),
   password VARCHAR(20),
   profile_pic TEXT
@@ -13,11 +13,11 @@ VALUES
 
 CREATE TABLE posts
 (
-  post_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   title VARCHAR(45),
   img TEXT,
   content TEXT,
-  author_id INT REFERENCES users(user_id)
+  author_id INT REFERENCES users(id)
 );
 
 INSERT INTO posts (title, img, content, author_id)

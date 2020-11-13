@@ -12,7 +12,7 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt)
         const [newUser] = await db.add_user([username, hash, profilePic])
         req.session.user = {
-          userId: newUser.user_id,
+          userId: newUser.id,
           username: newUser.username,
           profilePic: newUser.profile_pic,
         }
@@ -29,7 +29,7 @@ module.exports = {
         const authenticated = bcrypt.compareSync(password, foundUser.password)
         if( authenticated ){
             req.session.user = {
-                userId: foundUser.user_id,
+                userId: foundUser.id,
                 username: foundUser.username,
                 profilePic: foundUser.profile_pic
             }

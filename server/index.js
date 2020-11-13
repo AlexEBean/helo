@@ -34,6 +34,6 @@ app.post("/auth/register", ctrl.register)
 app.post("/auth/login", ctrl.login)
 
 
-app.get("/api/posts/:user_id", ctrl.getPosts)
+app.get("/api/posts/:userId", ctrl.getPosts)
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`))
