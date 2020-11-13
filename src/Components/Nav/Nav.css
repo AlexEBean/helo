@@ -1,0 +1,12 @@
+nav {
+    width: 10vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(#ff9770, #ff70a6);
+}
+
+.profile-pic {
+    height: 100px;
+    width: 100px;
+}

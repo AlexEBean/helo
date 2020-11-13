@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Nav from "./Components/Nav/Nav"
+import routes from "./routes"
+import {withRouter} from "react-router"
+
+class App extends Component {
+  render() {
+    return (
+      <body>
+        {this.props.location.pathname === "/"
+        ?
+        null
+        :
+        <Nav/>
+        }
+        {routes}
+      </body>
+    )
+  }
 }
 
-export default App;
+export default withRouter(App)
