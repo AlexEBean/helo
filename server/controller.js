@@ -45,17 +45,17 @@ module.exports = {
       const {userId} = req.params
 
       if (userposts === "true" && search) {
-        let filtered = await db.get_search_by_title(search)
-        res.status(200).send(filtered)
+        let filter = await db.get_search_by_title(search)
+        res.status(200).send(filter)
       } else if (userposts === "false" && !search){
-        let filtered = await db.get_author_search(userId)
-        res.status(200).send(filtered)
+        let filter = await db.get_author_search(userId)
+        res.status(200).send(filter)
       } else if (userposts === "false" && search){
-        let filtered = await db.get_search_by_title_and_not_author([userId, search])
-        res.status(200).send(filtered)
+        let filter = await db.get_search_by_title_and_not_author([userId, search])
+        res.status(200).send(filter)
       } else {
-        filtered = await db.get_posts()
-        res.status(200).send(filtered) 
+        let filter = await db.get_posts()
+        res.status(200).send(filter) 
       }
     }
 }

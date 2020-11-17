@@ -8,7 +8,7 @@ import {withRouter} from "react-router"
 class App extends Component {
   render() {
     return (
-      <body>
+      <div className = "body">
         {this.props.location.pathname === "/"
         ?
         null
@@ -16,7 +16,7 @@ class App extends Component {
         <Nav/>
         }
         {routes}
-      </body>
+      </div>
     )
   }
 }

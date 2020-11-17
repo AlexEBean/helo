@@ -1,13 +1,12 @@
 require('dotenv').config()
 const express = require('express')
 const massive = require('massive')
-const session = require('express-session');
+const session = require('express-session')
 const ctrl = require("./controller")
 
 const app = express()
 
-const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env
-const port = SERVER_PORT
+const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env
 
 app.use(express.json())
 
@@ -36,4 +35,4 @@ app.post("/auth/login", ctrl.login)
 
 app.get("/api/posts/:userId", ctrl.getPosts)
 
-app.listen(port, () => console.log(`Server is listening on port ${port}`))
+app.listen(SERVER_PORT, () => console.log(`Server is listening on port ${SERVER_PORT}`))

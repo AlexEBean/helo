@@ -13,6 +13,10 @@ class Dashboard extends Component {
     }
 
     componentDidMount = () => {
+        this.search()
+    }
+
+    search = () => {
         axios.get(
             this.state.search
             ? `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
@@ -30,18 +34,21 @@ class Dashboard extends Component {
         })
     }
 
-    handleCheckBox = () => {
-          this.setState({ userPosts: !this.state.userPosts })
+    handleCheckBox = (e) => {
+        if (e.target.value){
+            this.setState({ userPosts: !this.state.userPosts })
+        }
+          
       }
 
     render() {
         const {search, posts, userPosts} = this.state
-        const mapped = posts.map(e => {
+        const mapped = posts.map(post => {
             return (
                 <div>
-                    <h1>{e.title}</h1>
-                    <h1>{e.username}</h1>
-                    <img src={`${e.img}`} alt="profile-pic"/>
+                    <h1>{post.title}</h1>
+                    <h1>{post.username}</h1>
+                    <img src={`${post.img}`} alt="profile-pic"/>
                 </div> 
             )  
         })
@@ -58,14 +65,14 @@ class Dashboard extends Component {
                 <input 
                 name = "userPosts"
                 type = "checkbox"
-                id = "myPosts"
+                id = "userPosts"
                 checked = {userPosts}
-                onChange = {() => this.handleCheckBox()}
-                onClick = {() => {
-                    console.log(userPosts)
+                onChange = {(e) => {
+                    this.handleCheckBox(e)
+                    this.search()
                 }}
                 />
-                <label for = "myPosts">My Posts</label>
+                <label for = "userPosts">My Posts</label>
                 {mapped}
             </div>
         )
