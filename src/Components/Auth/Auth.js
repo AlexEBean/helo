@@ -20,7 +20,7 @@ class Auth extends Component {
     }
 
     register = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const {username, password} = this.state
         try {
             const user = await axios.post('/auth/register', {username, password})
@@ -33,7 +33,7 @@ class Auth extends Component {
     }
 
     login = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const {username, password} = this.state
         try {
             const user = await axios.post('/auth/login', {username, password})

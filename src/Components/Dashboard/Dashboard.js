@@ -16,11 +16,9 @@ class Dashboard extends Component {
         this.search()
     }
 
-    search = () => {
+    search = (e) => {
         axios.get(
-            this.state.search
-            ? `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
-            : `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}`
+            `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
       )
       .then(res => {
         this.setState({ posts: res.data })
@@ -38,8 +36,18 @@ class Dashboard extends Component {
         if (e.target.value){
             this.setState({ userPosts: !this.state.userPosts })
         }
-          
       }
+
+    reset = () => {
+        axios.get(`/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}`)
+      .then(res => {
+        this.setState({ 
+            posts: res.data, 
+            search: "" 
+        })
+      })
+      .catch(err => console.log(err));
+    }
 
     render() {
         const {search, posts, userPosts} = this.state
@@ -57,11 +65,11 @@ class Dashboard extends Component {
                 <input 
                 name = "search"
                 value = {search}
-                placeholder="Search.."
-                onChange={ e => this.changeHandler(e)}
+                placeholder = "Search.."
+                onChange = { e => this.changeHandler(e)}
                 />
-                <button>Search</button>
-                <button>Reset</button>
+                <button onClick = {this.search} >Search</button>
+                <button onClick = {this.reset}>Reset</button>
                 <input 
                 name = "userPosts"
                 type = "checkbox"
@@ -69,7 +77,6 @@ class Dashboard extends Component {
                 checked = {userPosts}
                 onChange = {(e) => {
                     this.handleCheckBox(e)
-                    this.search()
                 }}
                 />
                 <label for = "userPosts">My Posts</label>
