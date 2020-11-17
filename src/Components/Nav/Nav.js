@@ -9,11 +9,10 @@ class Nav extends Component {
 
 
     render() {
-        // console.log(this.props)
         return (
             <nav>
                 <div className = "profile">
-                    <img className = "profile-pic" src = {this.props.user.profilePic} alt = "profile-pic"/>
+                    <img className = "profile-pic" src = {`https://robohash.org/${this.props.user.username}`} alt = "profile-pic"/>
                     Welcome {this.props.user.username}
                 </div>
                 <Link to = "/dashboard">

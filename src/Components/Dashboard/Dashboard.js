@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux"
+import axios from "axios"
 
 class Dashboard extends Component {
     constructor(){
@@ -11,20 +12,36 @@ class Dashboard extends Component {
         }
     }
 
+    componentDidMount = () => {
+        axios.get(
+            this.state.search
+            ? `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
+            : `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}`
+      )
+      .then(res => {
+        this.setState({ posts: res.data })
+      })
+      .catch(err => console.log(err))
+    }
+
     changeHandler = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
+    handleCheckBox = () => {
+          this.setState({ userPosts: !this.state.userPosts })
+      }
+
     render() {
-        const {search, posts, userPosts} =this.state
+        const {search, posts, userPosts} = this.state
         const mapped = posts.map(e => {
             return (
                 <div>
                     <h1>{e.title}</h1>
                     <h1>{e.username}</h1>
-                    <img src={e.profilePic} alt="profile-pic"/>
+                    <img src={`${e.img}`} alt="profile-pic"/>
                 </div> 
             )  
         })
@@ -39,9 +56,14 @@ class Dashboard extends Component {
                 <button>Search</button>
                 <button>Reset</button>
                 <input 
-                name = "myPosts"
+                name = "userPosts"
                 type = "checkbox"
                 id = "myPosts"
+                checked = {userPosts}
+                onChange = {() => this.handleCheckBox()}
+                onClick = {() => {
+                    console.log(userPosts)
+                }}
                 />
                 <label for = "myPosts">My Posts</label>
                 {mapped}

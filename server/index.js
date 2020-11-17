@@ -26,7 +26,7 @@ massive({
         rejectUnauthorized: false
     }
 }).then( db => {
-    app.set('db', db)
+    app.set("db", db)
     console.log("Connected to DB")
 })
 

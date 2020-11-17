@@ -41,22 +41,21 @@ module.exports = {
 
     getPosts: async (req, res) => {
       const db = req.app.get('db')
-      const {userPosts, search} = req.query
+      const {userposts, search} = req.query
       const {userId} = req.params
-      let filtered = []
 
-      if (userPosts && search) {
-        filtered = await db.get_search_by_title(`%${search}%`)
-        
-      } else if (!userPosts && !search){
-        filtered = await db.get_search_by_not_author(userId)
-
-      } else if (!userPosts && search){
-        filtered = await db.get_search_by_title_and_not_author([userId, `%${search}%`])
+      if (userposts === "true" && search) {
+        let filtered = await db.get_search_by_title(search)
+        res.status(200).send(filtered)
+      } else if (userposts === "false" && !search){
+        let filtered = await db.get_author_search(userId)
+        res.status(200).send(filtered)
+      } else if (userposts === "false" && search){
+        let filtered = await db.get_search_by_title_and_not_author([userId, search])
+        res.status(200).send(filtered)
       } else {
         filtered = await db.get_posts()
+        res.status(200).send(filtered) 
       }
-
-      res.status(200).send(filtered)
     }
 }

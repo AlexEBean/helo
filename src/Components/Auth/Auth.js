@@ -10,15 +10,7 @@ class Auth extends Component {
         this.state = {
             username: "",
             password: "",
-            profilePic: "",
-            newUser: false
         }
-    }
-    
-    toggleNewUser = () => {
-        this.setState({
-            newUser: !this.state.newUser
-        })
     }
 
     changeHandler = (e) => {
@@ -29,11 +21,11 @@ class Auth extends Component {
 
     register = async (e) => {
         e.preventDefault();
-        const {username, password, profilePic} = this.state
+        const {username, password} = this.state
         try {
-            const user = await axios.post('/auth/register', {username, password, profilePic})
+            const user = await axios.post('/auth/register', {username, password})
             this.props.loginUser(user.data)
-            this.props.history.push('/dashboard')
+            this.props.history.push('/dashboard/')
         } 
         catch(err){ 
                 alert(err.response.request.response)
@@ -42,11 +34,11 @@ class Auth extends Component {
 
     login = async (e) => {
         e.preventDefault();
-        const {username, password, profilePic} = this.state
+        const {username, password} = this.state
         try {
-            const user = await axios.post('/auth/login', {username, password, profilePic})
+            const user = await axios.post('/auth/login', {username, password})
             this.props.loginUser(user.data)
-            this.props.history.push('/dashboard')
+            this.props.history.push('/dashboard/')
         } 
         catch(err){ 
                 alert(err.response.request.response)
@@ -54,41 +46,12 @@ class Auth extends Component {
     }
 
     render() {
-        const {username, password, profilePic, newUser} = this.state
+        const {username, password} = this.state
         return (
             <div className = "auth">
-                {newUser 
-                ? 
-                <div>
-                    <h3>Register</h3>
-                    <form onSubmit = {e => this.register(e)}>
-                        <input 
-                            name="username" 
-                            value={username} 
-                            placeholder="Username?" 
-                            onChange={ e => this.changeHandler(e)}
-                        />
-                        <input 
-                            name="password" 
-                            type="password"
-                            value={password} 
-                            placeholder="Password?"
-                            onChange={ e => this.changeHandler(e)}
-                        />
-                        <input
-                            name = "profilePic"
-                            value = {profilePic}
-                            placeholder="Profile Picture URL"
-                            onChange={(e) => this.changeHandler(e)}
-                        />
-                        <button>Submit</button>
-                    </form>
-                    <button onClick={this.toggleNewUser}>Log in here</button>
-                </div>
-                :
-                <div>
-                    <h3>Login</h3>
-                    <form onSubmit = {e => this.login(e)}>
+                    <h3>Helo</h3>
+
+                    <form>
                         <input 
                             name="username" 
                             value={username} 
@@ -102,10 +65,9 @@ class Auth extends Component {
                             placeholder="Enter Password" 
                             onChange={ e => this.changeHandler(e)}
                         />
-                        <button>Submit</button>
-                    </form>
-                    <button onClick={this.toggleNewUser}>Register here</button>
-                </div>}                
+                        <button onClick = {e => this.register(e)}>Register</button>
+                        <button onClick = {e => this.login(e)}>Log in</button>
+                    </form>        
             </div>
         )
     }
