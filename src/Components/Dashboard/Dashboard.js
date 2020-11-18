@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux"
 import axios from "axios"
+import {Link} from "react-router-dom"
+import "./Dashboard.css"
 
 class Dashboard extends Component {
     constructor(){
@@ -16,7 +18,7 @@ class Dashboard extends Component {
         this.search()
     }
 
-    search = (e) => {
+    search = () => {
         axios.get(
             `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
       )
@@ -39,7 +41,7 @@ class Dashboard extends Component {
       }
 
     reset = () => {
-        axios.get(`/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}`)
+        axios.get(`/api/posts/${this.props.user.userId}`)
       .then(res => {
         this.setState({ 
             posts: res.data, 
@@ -53,11 +55,11 @@ class Dashboard extends Component {
         const {search, posts, userPosts} = this.state
         const mapped = posts.map(post => {
             return (
-                <div>
+                <Link to = {`/post/${post.id}`} className = "post-link">
                     <h1>{post.title}</h1>
                     <h1>{post.username}</h1>
                     <img src={`${post.img}`} alt="profile-pic"/>
-                </div> 
+                </Link> 
             )  
         })
         return (
@@ -77,6 +79,7 @@ class Dashboard extends Component {
                 checked = {userPosts}
                 onChange = {(e) => {
                     this.handleCheckBox(e)
+                    console.log(posts)
                 }}
                 />
                 <label for = "userPosts">My Posts</label>

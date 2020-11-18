@@ -3,18 +3,18 @@ const bcrypt = require("bcrypt")
 module.exports = {
     register: async (req, res) => {
         const db = req.app.get("db")
-        const { username, password, profilePic } = req.body
+        const { username, password, profile_pic} = req.body
         const existingUser = await db.check_user(username)
         if (existingUser[0]) {
           return res.status(409).send("User Already Exists")
         }
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)
-        const [newUser] = await db.add_user([username, hash, profilePic])
+        const [newUser] = await db.add_user([username, hash, profile_pic])
         req.session.user = {
           userId: newUser.id,
           username: newUser.username,
-          profilePic: newUser.profile_pic,
+          profilePic: `https://robohash.org/${newUser.username}`
         }
         res.status(200).send(req.session.user)
       },
@@ -31,7 +31,7 @@ module.exports = {
             req.session.user = {
                 userId: foundUser.id,
                 username: foundUser.username,
-                profilePic: foundUser.profile_pic
+                profilePic: `https://robohash.org/${foundUser.username}`
             }
             res.status(200).send(req.session.user)
         } else {
@@ -57,5 +57,12 @@ module.exports = {
         let filter = await db.get_posts()
         res.status(200).send(filter) 
       }
+    },
+
+    getPost: async (req, res) => {
+      const db = req.app.get('db')
+      const {id} = req.params
+      let post = await db.get_post(id)
+        res.status(200).send(post)
     }
 }
