@@ -11,7 +11,7 @@ class Nav extends Component {
         return (
             <nav>
                 <div className = "profile">
-                    <img className = "profile-pic" src = {this.props.user.profilePic} alt = "profile-pic"/>
+                    <img className = "profile-pic" src = {this.props.user.profile_pic} alt = "profile-pic"/>
                     Welcome {this.props.user.username}
                 </div>
                 <Link to = "/dashboard">

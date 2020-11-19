@@ -1,0 +1,12 @@
+.post {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post > img {
+    height: 35vh;
+    width: 50vh;
+}

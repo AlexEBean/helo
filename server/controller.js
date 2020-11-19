@@ -12,9 +12,9 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt)
         const [newUser] = await db.add_user([username, hash, profile_pic])
         req.session.user = {
-          userId: newUser.id,
+          userId: newUser.user_id,
           username: newUser.username,
-          profilePic: `https://robohash.org/${newUser.username}`
+          profile_pic: `https://robohash.org/${newUser.username}`
         }
         res.status(200).send(req.session.user)
       },
@@ -29,9 +29,9 @@ module.exports = {
         const authenticated = bcrypt.compareSync(password, foundUser.password)
         if( authenticated ){
             req.session.user = {
-                userId: foundUser.id,
+                userId: foundUser.user_id,
                 username: foundUser.username,
-                profilePic: `https://robohash.org/${foundUser.username}`
+                profile_pic: `https://robohash.org/${foundUser.username}`
             }
             res.status(200).send(req.session.user)
         } else {
@@ -48,10 +48,10 @@ module.exports = {
         let filter = await db.get_search_by_title(search)
         res.status(200).send(filter)
       } else if (userposts === "false" && !search){
-        let filter = await db.get_author_search(userId)
+        let filter = await db.get_author_search(+userId)
         res.status(200).send(filter)
       } else if (userposts === "false" && search){
-        let filter = await db.get_search_by_title_and_not_author([userId, search])
+        let filter = await db.get_search_by_title_and_not_author([+userId, search])
         res.status(200).send(filter)
       } else {
         let filter = await db.get_posts()
@@ -61,8 +61,17 @@ module.exports = {
 
     getPost: async (req, res) => {
       const db = req.app.get('db')
-      const {id} = req.params
-      let post = await db.get_post(id)
+      const {postId} = req.params
+      let post = await db.get_post(+postId)
         res.status(200).send(post)
-    }
+    },
+
+    addPost: async (req, res) => {
+      const db = req.app.get('db')
+      const {title, img, content} = req.body
+      const {userId} = req.params
+
+      await db.add_post([title, img, content, +userId])
+      res.sendStatus(200)
+  }
 }

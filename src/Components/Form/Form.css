@@ -1,0 +1,12 @@
+.form {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form > img {
+    height: 35vh;
+    width: 70vh;
+}

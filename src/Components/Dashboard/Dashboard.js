@@ -23,7 +23,9 @@ class Dashboard extends Component {
             `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
       )
       .then(res => {
-        this.setState({ posts: res.data })
+        this.setState({ 
+            posts: res.data
+         })
       })
       .catch(err => console.log(err))
     }
@@ -55,10 +57,10 @@ class Dashboard extends Component {
         const {search, posts, userPosts} = this.state
         const mapped = posts.map(post => {
             return (
-                <Link to = {`/post/${post.id}`} className = "post-link">
+                <Link to = {`/post/${post.post_id}`} className = "post-link">
                     <h1>{post.title}</h1>
                     <h1>{post.username}</h1>
-                    <img src={`${post.img}`} alt="profile-pic"/>
+                    <img src={`https://robohash.org/${post.username}`} alt="profile-pic"/>
                 </Link> 
             )  
         })

@@ -1,5 +1,5 @@
-SELECT p.id, p.title, p.img, p.content, u.username, u.profile_pic
+SELECT p.user_id, p.title, p.img, p.content, u.username, u.profile_pic, p.post_id
 FROM users u
 JOIN posts p
-    ON u.id = p.author_id
-    WHERE p.id = $1;
+    ON u.user_id = p.user_id
+    WHERE p.user_id = $1;

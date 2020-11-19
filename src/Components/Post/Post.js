@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios"
+import "./Post.css"
 
 class Post extends Component {
     constructor(){
@@ -33,19 +34,12 @@ class Post extends Component {
     render() {
         const {title, img, content, author, authorPicture} = this.state
         return (
-            <div>
+            <div className = "post">
                 <h1>{title}</h1>
                 <img src={img} alt="post-pic"/>
                 <h1>{content}</h1>
                 <h1>By {author}</h1>
                 <img src={authorPicture} alt="profile-pic"/>
-            <button
-                onClick = {() => {
-                    console.log(this.state)
-                }}
-            >
-                What
-            </button>
             </div>
         )
     }

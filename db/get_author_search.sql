@@ -1,5 +1,5 @@
-SELECT p.id, p.title, u.username, p.img, p.content, u.profile_pic
+SELECT p.user_id, p.title, u.username, p.img, p.content, u.profile_pic, p.post_id
 FROM users u
 JOIN posts p
-    ON u.id = p.author_id
-    WHERE NOT u.id = $1;
+    ON u.user_id = p.user_id
+    WHERE NOT u.user_id = $1;
