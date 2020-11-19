@@ -59,12 +59,6 @@ class Post extends Component {
                 :
                     null
                 }
-                                    <button
-                    onClick = {() => {
-                        console.log(this.state)
-                    }}
-                    >What
-                    </button>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux"
 import axios from "axios"
 import {Link} from "react-router-dom"
 import "./Dashboard.css"
@@ -20,7 +19,7 @@ class Dashboard extends Component {
 
     search = () => {
         axios.get(
-            `/api/posts/${this.props.user.userId}?userposts=${this.state.userPosts}&search=${this.state.search}`
+            `/api/posts?userposts=${this.state.userPosts}&search=${this.state.search}`
       )
       .then(res => {
         this.setState({ 
@@ -43,7 +42,7 @@ class Dashboard extends Component {
       }
 
     reset = () => {
-        axios.get(`/api/posts/${this.props.user.userId}`)
+        axios.get(`/api/posts`)
       .then(res => {
         this.setState({ 
             posts: res.data, 
@@ -91,6 +90,4 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = state => state
-
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard

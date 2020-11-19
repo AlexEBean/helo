@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux"
 import axios from "axios"
 import "./Form.css"
 
@@ -21,7 +20,7 @@ class Form extends Component {
 
     addPost = (e) => {
         e.preventDefault()
-        axios.post(`/api/post/${this.props.user.userId}`, {...this.state})
+        axios.post(`/api/post`, {...this.state})
             .then(() => {
                 this.props.history.push("/dashboard")
              })
@@ -62,6 +61,5 @@ class Form extends Component {
         )
     }
 }
-const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(Form)
+export default Form

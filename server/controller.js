@@ -47,7 +47,7 @@ module.exports = {
     getPosts: async (req, res) => {
       const db = req.app.get('db')
       const {userposts, search} = req.query
-      const {userId} = req.params
+      const {userId} = req.session.user
 
       if (userposts === "true" && search) {
         let filter = await db.get_search_by_title(search)
@@ -74,7 +74,7 @@ module.exports = {
     addPost: async (req, res) => {
       const db = req.app.get('db')
       const {title, img, content} = req.body
-      const {userId} = req.params
+      const {userId} = req.session.user
 
       await db.add_post([title, img, content, +userId])
       res.sendStatus(200)

@@ -34,9 +34,9 @@ app.post("/auth/login", ctrl.login)
 app.post("/auth/logout", ctrl.logout)
 
 
-app.get("/api/posts/:userId", ctrl.getPosts)
+app.get("/api/posts", ctrl.getPosts)
 app.get("/api/post/:postId", ctrl.getPost)
-app.post("/api/post/:userId", ctrl.addPost)
+app.post("/api/post", ctrl.addPost)
 app.delete("/api/post/:postId", ctrl.deletePost)
 
 app.listen(SERVER_PORT, () => console.log(`Server is listening on port ${SERVER_PORT}`))
