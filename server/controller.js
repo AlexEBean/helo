@@ -39,6 +39,11 @@ module.exports = {
         }
     },
 
+    logout: (req, res) => {
+      req.session.destroy();
+      res.sendStatus(200);
+  },
+
     getPosts: async (req, res) => {
       const db = req.app.get('db')
       const {userposts, search} = req.query
@@ -73,5 +78,12 @@ module.exports = {
 
       await db.add_post([title, img, content, +userId])
       res.sendStatus(200)
-  }
+  },
+
+    deletePost: async (req, res) => {
+      const db = req.app.get('db')
+      const {postId} = req.params
+      await db.delete_post([+postId])
+      res.sendStatus(200)
+    }
 }
