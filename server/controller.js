@@ -40,8 +40,21 @@ module.exports = {
     },
 
     logout: (req, res) => {
-      req.session.destroy();
-      res.sendStatus(200);
+      req.session.destroy()
+      res.sendStatus(200)
+  },
+
+  getUser: async (req, res) => {
+    const db = req.app.get('db')
+    const {userId} = req.session.user
+
+    const [currentUser] = await db.get_user(userId)
+
+    if (currentUser) {
+        return res.status(200).send(req.session.user)
+    } else {
+        res.status(404).send("You ndeed to login again")
+    }
   },
 
     getPosts: async (req, res) => {

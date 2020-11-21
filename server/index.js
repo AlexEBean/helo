@@ -32,7 +32,7 @@ massive({
 app.post("/auth/register", ctrl.register)
 app.post("/auth/login", ctrl.login)
 app.post("/auth/logout", ctrl.logout)
-
+app.get("/api/auth/me", ctrl.getUser)
 
 app.get("/api/posts", ctrl.getPosts)
 app.get("/api/post/:postId", ctrl.getPost)

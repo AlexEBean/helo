@@ -80,7 +80,6 @@ class Dashboard extends Component {
                 checked = {userPosts}
                 onChange = {(e) => {
                     this.handleCheckBox(e)
-                    console.log(posts)
                 }}
                 />
                 <label for = "userPosts">My Posts</label>

@@ -1,11 +1,29 @@
 import React, { Component } from 'react'
 import {Link} from "react-router-dom"
 import {connect} from "react-redux"
+import {loginUser, logoutUser} from "../../redux/reducer"
+import axios from "axios"
 import "./Nav.css"
 
 
 class Nav extends Component {
 
+    componentDidMount = () => {
+        this.getUser()
+    }
+
+    getUser = async () => {
+        try {
+            const currentUser = await axios.get("/api/auth/me")
+            loginUser(currentUser.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    logout = () => {
+        logoutUser()
+    }
 
     render() {
         return (
@@ -20,7 +38,9 @@ class Nav extends Component {
                 <Link to = "/new">
                     New Post
                 </Link>
-                <Link to = "/">
+                <Link to = "/"
+                    onClick = {this.logout}
+                >
                     Logout
                 </Link>
             </nav>
@@ -30,4 +50,4 @@ class Nav extends Component {
 
 const mapStateToProps = state => state
 
-export default connect(mapStateToProps)(Nav)
+export default connect(mapStateToProps, {loginUser, logoutUser})(Nav)
